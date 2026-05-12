@@ -89,6 +89,8 @@
     background:linear-gradient(135deg,#e50914,#831010);font-size:64px;font-weight:700;color:#fff;
   }
   .profile-avatar.blue{background:linear-gradient(135deg,#0071eb,#003c7a);}
+  .profile-avatar.iceblue{background:linear-gradient(135deg,#7ed4ff,#3aa3d8);color:#003c54;}
+  .profile-avatar.purple{background:linear-gradient(135deg,#b04cc7,#5c1d6e);}
   .profile-avatar.yellow{background:linear-gradient(135deg,#ffb800,#7a5800);}
   .profile-avatar.kids{background:linear-gradient(135deg,#9c27b0,#4a1259);}
   .profile-avatar.add{background:transparent;border:2px solid #333;color:#808080;font-size:80px;font-weight:300;}
@@ -432,24 +434,13 @@
 <div id="profileScreen">
   <h1>Who's watching?</h1>
   <div class="profile-grid">
-    <div class="profile" onclick="selectProfile('You','red')">
-      <div class="profile-avatar">Y</div><div class="profile-name">You</div>
+    <div class="profile" onclick="selectProfile('Jordan','iceblue')">
+      <div class="profile-avatar iceblue">J</div><div class="profile-name">Jordan</div>
     </div>
-    <div class="profile" onclick="selectProfile('Friend','blue')">
-      <div class="profile-avatar blue">F</div><div class="profile-name">Friend</div>
-    </div>
-    <div class="profile" onclick="selectProfile('Guest','yellow')">
-      <div class="profile-avatar yellow">G</div><div class="profile-name">Guest</div>
-    </div>
-    <div class="profile" onclick="selectProfile('Kids','kids')">
-      <div class="profile-avatar kids">K</div><div class="profile-name">Kids</div>
-      <div class="kids-badge">KIDS</div>
-    </div>
-    <div class="profile" onclick="selectProfile('You','red')">
-      <div class="profile-avatar add">+</div><div class="profile-name">Add Profile</div>
+    <div class="profile" onclick="selectProfile('Beautiful Girlfriend 💕','purple')">
+      <div class="profile-avatar purple">B</div><div class="profile-name">Beautiful Girlfriend 💕</div>
     </div>
   </div>
-  <button class="manage-btn">MANAGE PROFILES</button>
 </div>
 
 <header id="header" style="display:none;">
@@ -481,12 +472,9 @@
       <div class="avatar-img" id="headerAvatar">Y</div>
       <svg class="avatar-chevron" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
       <div class="avatar-dropdown" id="avatarDropdown">
-        <a><div class="mini-avatar" style="background:#0071eb">F</div>Friend</a>
-        <a><div class="mini-avatar" style="background:#ffb800">G</div>Guest</a>
-        <a><div class="mini-avatar" style="background:#9c27b0">K</div>Kids</a>
+        <a onclick="selectProfile('Jordan','iceblue')"><div class="mini-avatar" style="background:linear-gradient(135deg,#7ed4ff,#3aa3d8);color:#003c54">J</div>Jordan</a>
+        <a onclick="selectProfile('Beautiful Girlfriend 💕','purple')"><div class="mini-avatar" style="background:linear-gradient(135deg,#b04cc7,#5c1d6e)">B</div>Beautiful Girlfriend 💕</a>
         <hr>
-        <a>Manage Profiles</a>
-        <a>Transfer Profile</a>
         <a>Account</a>
         <a>Help Center</a>
         <hr>
@@ -558,7 +546,8 @@ const VIDKING='https://www.vidking.net/embed';
 const ACCENT='e50914';
 const GENRE_MAP={28:'Action',12:'Adventure',16:'Animation',35:'Comedy',80:'Crime',99:'Documentary',18:'Drama',10751:'Family',14:'Fantasy',36:'History',27:'Horror',10402:'Music',9648:'Mystery',10749:'Romance',878:'Sci-Fi',10770:'TV Movie',53:'Thriller',10752:'War',37:'Western',10759:'Action & Adventure',10762:'Kids',10763:'News',10764:'Reality',10765:'Sci-Fi & Fantasy',10766:'Soap',10767:'Talk',10768:'War & Politics'};
 
-let TMDB_KEY=localStorage.getItem('tmdb_key')||'';
+let TMDB_KEY=localStorage.getItem('tmdb_key')||'0d1961a6c5882baf5f9b402c94d992ac';
+if(!localStorage.getItem('tmdb_key'))localStorage.setItem('tmdb_key','0d1961a6c5882baf5f9b402c94d992ac');
 let currentTab='home';
 let currentProfile=JSON.parse(localStorage.getItem('profile')||'null');
 let currentMedia=null;
@@ -586,9 +575,13 @@ function selectProfile(name,color){
   localStorage.setItem('profile',JSON.stringify(currentProfile));
   const av=document.getElementById('headerAvatar');
   av.textContent=name[0];
+  av.style.color='#fff';
   if(color==='blue')av.style.background='linear-gradient(135deg,#0071eb,#003c7a)';
+  else if(color==='iceblue'){av.style.background='linear-gradient(135deg,#7ed4ff,#3aa3d8)';av.style.color='#003c54';}
+  else if(color==='purple')av.style.background='linear-gradient(135deg,#b04cc7,#5c1d6e)';
   else if(color==='yellow')av.style.background='linear-gradient(135deg,#ffb800,#7a5800)';
   else if(color==='kids')av.style.background='linear-gradient(135deg,#9c27b0,#4a1259)';
+  else av.style.background='linear-gradient(135deg,#e50914,#831010)';
   hideProfileScreen();init();
 }
 function signOut(){
@@ -1202,8 +1195,7 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-if(!TMDB_KEY)showApiModal();
-else if(!currentProfile)showProfileScreen();
+if(!currentProfile)showProfileScreen();
 else selectProfile(currentProfile.name,currentProfile.color);
 </script>
 </body>
