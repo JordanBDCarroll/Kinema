@@ -469,6 +469,12 @@
   @media (max-width:900px){
     .mobile-tabs{display:flex;}
     body{padding-bottom:calc(56px + env(safe-area-inset-bottom,0px));}
+    /* Header: solid bg + safe-area top padding so logo clears notch */
+    header{
+      background:var(--bg) !important;
+      padding-top:calc(14px + env(safe-area-inset-top,0px));
+      padding-bottom:14px;
+    }
     .search-wrap{display:none;}
     .notif-bell{display:none;}
     .avatar-menu{display:none;}
@@ -480,6 +486,20 @@
     .card:hover .card-play-icon{background:none !important;}
     .hero-btn{min-height:44px;font-size:15px;padding:10px 20px;}
     .detail-modal{border-radius:0;}
+    /* Player: stack controls bar above iframe so nothing is cut off */
+    .player-overlay{
+      display:flex;flex-direction:column;
+      padding-top:env(safe-area-inset-top,0);
+    }
+    .player-back{
+      position:static;min-height:50px;
+      background:rgba(0,0,0,.9);border-radius:0;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      font-size:15px;padding:0 16px;
+      flex-shrink:0;
+    }
+    .player-fallback{display:none;}
+    .player-overlay iframe{flex:1;width:100%;height:0;}
   }
   @media (max-width:480px){
     .card{flex:0 0 calc((100% - 4% - 4px) / 2) !important;min-width:0 !important;}
