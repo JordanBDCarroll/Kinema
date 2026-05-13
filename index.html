@@ -211,7 +211,7 @@
   .row-arrow.right{right:0;}
   .row-arrow svg{width:30px;height:30px;color:#fff;}
 
-  /* CARD */
+  /* CARD v2 */
   .card{
     flex:0 0 calc((100% - 4% - 5*4px) / 6);min-width:200px;
     position:relative;cursor:pointer;
@@ -219,7 +219,7 @@
   }
   .card-img-wrap{
     position:relative;width:100%;aspect-ratio:16/9;
-    border-radius:4px;overflow:hidden;background:#000;
+    border-radius:6px;overflow:hidden;background:#111;
     transition:transform .3s ease, box-shadow .3s;
     transform-origin:center center;
   }
@@ -227,51 +227,61 @@
   .card:hover{z-index:10;}
   .card:hover .card-img-wrap{
     transform:scale(1.18);
-    box-shadow:0 8px 32px rgba(0,0,0,.85);
+    border-radius:6px 6px 0 0;
+    box-shadow:0 8px 32px rgba(0,0,0,.9);
   }
+  .card-img-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(0deg,rgba(0,0,0,.75) 0%,rgba(0,0,0,.05) 50%,transparent 100%);
+    display:flex;align-items:flex-end;padding:8px 10px;pointer-events:none;
+  }
+  .card-img-overlay-title{
+    font-size:12px;font-weight:600;color:#fff;
+    text-shadow:0 1px 4px rgba(0,0,0,.9);
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;
+  }
+  .card-play-icon{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,0);transition:background .2s;pointer-events:none;
+  }
+  .card-play-icon svg{
+    width:42px;height:42px;background:rgba(255,255,255,.92);border-radius:50%;
+    color:#000;padding:11px;box-shadow:0 2px 14px rgba(0,0,0,.5);
+    opacity:0;transition:opacity .2s;
+  }
+  .card:hover .card-play-icon{background:rgba(0,0,0,.18);}
+  .card:hover .card-play-icon svg{opacity:1;}
   .card-title-static{
-    margin-top:10px;
-    color:#e5e5e5;font-size:13px;font-weight:500;
+    margin-top:8px;
+    color:#999;font-size:12px;font-weight:400;
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
     padding:0 2px;
   }
-  /* HOVER PANEL — rendered as fixed overlay, attached to body, so it can't be clipped */
-  .card-hover{
-    position:fixed;
-    background:var(--bg-2);
-    padding:12px 14px 14px;
-    border-radius:0 0 4px 4px;
-    opacity:0;
-    transition:opacity .15s ease;
-    pointer-events:none;
-    box-shadow:0 8px 24px rgba(0,0,0,.7);
-    z-index:40;
-    display:none;
+  /* GLOBAL HOVER PANEL */
+  #chov{
+    position:fixed;z-index:1000;display:none;
+    background:#1e1e1e;border-radius:0 0 6px 6px;
+    box-shadow:0 12px 40px rgba(0,0,0,.9);overflow:hidden;
   }
-  .card-hover.show{display:block;opacity:1;pointer-events:auto;}
-  .card-hover-title{
-    font-size:14px;font-weight:600;color:#fff;margin-bottom:8px;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  }
-  .card-actions{display:flex;gap:8px;align-items:center;margin-bottom:10px;}
+  .chov-actions{display:flex;gap:8px;align-items:center;padding:12px 12px 8px;}
+  .chov-meta{display:flex;align-items:center;gap:7px;font-size:12px;color:#e5e5e5;padding:0 12px 7px;flex-wrap:wrap;}
+  .chov-meta .match{color:#46d369;font-weight:700;}
+  .chov-meta .age{border:1px solid rgba(255,255,255,.4);padding:0 5px;font-size:11px;}
+  .chov-meta .hd{border:1px solid rgba(255,255,255,.4);padding:0 5px;font-size:10px;font-weight:700;}
+  .chov-genres{font-size:11px;color:#bbb;display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding:0 12px 12px;}
+  .chov-genres .dot{color:#555;font-size:7px;}
   .card-action{
     width:32px;height:32px;border-radius:50%;border:2px solid rgba(255,255,255,.5);
-    display:flex;align-items:center;justify-content:center;background:rgba(42,42,42,.6);
-    color:#fff;transition:all .15s;
+    display:flex;align-items:center;justify-content:center;background:rgba(30,30,30,.8);
+    color:#fff;transition:all .15s;cursor:pointer;flex-shrink:0;
   }
-  .card-action:hover{border-color:#fff;background:rgba(255,255,255,.1);}
+  .card-action:hover{border-color:#fff;background:rgba(255,255,255,.15);}
   .card-action.play{background:#fff;color:#000;border-color:#fff;}
   .card-action.play:hover{background:rgba(255,255,255,.85);}
   .card-action.more{margin-left:auto;}
-  .card-meta{display:flex;align-items:center;gap:8px;font-size:12px;color:#e5e5e5;margin-bottom:6px;flex-wrap:wrap;}
-  .card-meta .match{color:#46d369;font-weight:600;}
-  .card-meta .age{border:1px solid rgba(255,255,255,.4);padding:0 5px;font-size:11px;}
-  .card-meta .hd{border:1px solid rgba(255,255,255,.4);padding:0 5px;font-size:10px;font-weight:600;}
-  .card-genres{font-size:12px;color:#ddd;display:flex;flex-wrap:wrap;align-items:center;gap:5px;}
-  .card-genres .dot{color:#646464;font-size:8px;}
-  .card-progress{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.3);}
+  .card-progress{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.25);}
   .card-progress div{height:100%;background:var(--accent);}
-  .card-progress-text{position:absolute;left:8px;bottom:10px;font-size:11px;color:#fff;text-shadow:1px 1px 3px rgba(0,0,0,.8);font-weight:500;}
+  .card-progress-text{position:absolute;left:8px;bottom:8px;font-size:11px;color:#fff;text-shadow:1px 1px 3px rgba(0,0,0,.8);font-weight:500;}
 
   /* TOP 10 */
   .row.top10 .row-track{gap:0;padding-left:0;padding-bottom:40px;}
@@ -546,6 +556,17 @@
   <iframe id="playerIframe" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="origin"></iframe>
 </div>
 
+<div id="chov">
+  <div class="chov-actions">
+    <button class="card-action play chov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+    <button class="card-action chov-list"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></button>
+    <button class="card-action chov-like"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 10v12M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H7V10l4.34-9.66A1.93 1.93 0 0 1 13 0a2 2 0 0 1 2 2v3.88z"/></svg></button>
+    <button class="card-action more chov-more"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+  </div>
+  <div class="chov-meta"></div>
+  <div class="chov-genres"></div>
+</div>
+
 <script>
 const TMDB_BASE='https://api.themoviedb.org/3';
 const TMDB_IMG='https://image.tmdb.org/t/p/';
@@ -636,39 +657,21 @@ function ageRating(i){const v=i.vote_average||5;if(i.adult)return'TV-MA';return 
 function cardHTML(item){
   const type=getMediaType(item),title=getTitle(item),date=getDate(item);
   const match=calcMatch(item),age=ageRating(item),genres=getGenres(item);
-  // Landscape card: ONLY use backdrop. Never use a portrait poster here — it stretches/crops badly.
-  // _poster is only set for continue/mylist items where we already saved a backdrop, so it's fine.
   const fallback=`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'><rect width='16' height='9' fill='%23232323'/><text x='8' y='5' text-anchor='middle' fill='%23555' font-family='Arial' font-size='1.2' font-weight='700'>${encodeURIComponent(title.slice(0,30))}</text></svg>`;
-  const img=item.backdrop_path?TMDB_IMG+'w780'+item.backdrop_path:
-            item._poster||fallback;
+  const img=item.backdrop_path?TMDB_IMG+'w780'+item.backdrop_path:item._poster||fallback;
   const prog=getItemProgress(type,item.id);
   const progPct=prog&&prog.duration?Math.min(100,(prog.currentTime/prog.duration)*100):0;
-  const inList=isInMyList(type,item.id);
-  const data=JSON.stringify({id:item.id,type,title}).replace(/'/g,'&#39;').replace(/"/g,'&quot;');
   const remMin=prog&&prog.duration?Math.max(0,Math.round((prog.duration-prog.currentTime)/60)):0;
+  const data=JSON.stringify({id:item.id,type,title,match,age,date:date||'',genres}).replace(/'/g,'&#39;').replace(/"/g,'&quot;');
   return `
     <div class="card fade-in" data-meta='${data}'>
       <div class="card-img-wrap">
-        <img src="${img}" alt="${title.replace(/"/g,'&quot;')}" loading="lazy" />
+        <img src="${img}" alt="${title.replace(/"/g,'&quot;')}" loading="lazy"/>
+        <div class="card-img-overlay"><span class="card-img-overlay-title">${title}</span></div>
+        <div class="card-play-icon" data-action="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
         ${progPct>1?`<div class="card-progress"><div style="width:${progPct}%"></div></div><div class="card-progress-text">${remMin}m left</div>`:''}
       </div>
       <div class="card-title-static">${title}</div>
-      <div class="card-hover">
-        <div class="card-hover-title">${title}</div>
-        <div class="card-actions">
-          <button class="card-action play" data-action="play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-          <button class="card-action" data-action="list" title="${inList?'Remove':'Add to My List'}">
-            ${inList?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>'}
-          </button>
-          <button class="card-action" data-action="like"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 10v12M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H7V10l4.34-9.66A1.93 1.93 0 0 1 13 0a2 2 0 0 1 2 2v3.88z"/></svg></button>
-          <button class="card-action more" data-action="more"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
-        </div>
-        <div class="card-meta">
-          <span class="match">${match}% Match</span><span class="age">${age}</span>
-          <span>${date||''}</span><span class="hd">HD</span>
-        </div>
-        <div class="card-genres">${genres.map((g,i)=>`${i>0?'<span class="dot">●</span>':''}<span>${g}</span>`).join('')}</div>
-      </div>
     </div>`;
 }
 
@@ -794,66 +797,56 @@ function renderManualHome(){
 }
 function resetKey(){localStorage.removeItem('tmdb_key');TMDB_KEY='';showApiModal();}
 
+const _chov=document.getElementById('chov');
+let _chovCard=null,_chovHideTimer=null;
+_chov.addEventListener('mouseleave',e=>{
+  if(e.relatedTarget&&e.relatedTarget.closest&&e.relatedTarget.closest('.card'))return;
+  _chovHideTimer=setTimeout(()=>{if(!_chov.matches(':hover'))hideChov();},120);
+});
+function showChov(card){
+  const meta=JSON.parse(card.dataset.meta);
+  const wrap=card.querySelector('.card-img-wrap');
+  const rect=wrap.getBoundingClientRect();
+  const sw=rect.width*1.18,sh=rect.height*1.18;
+  let left=rect.left-(sw-rect.width)/2;
+  const top=rect.top+(sh-rect.height)/2+rect.height-1;
+  if(left+sw>window.innerWidth-8)left=window.innerWidth-sw-8;
+  if(left<8)left=8;
+  _chov.style.left=left+'px';
+  _chov.style.top=top+'px';
+  _chov.style.width=sw+'px';
+  _chov.style.display='block';
+  const inList=isInMyList(meta.type,meta.id);
+  const lb=_chov.querySelector('.chov-list');
+  lb.title=inList?'Remove from My List':'Add to My List';
+  lb.innerHTML=inList
+    ?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>'
+    :'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>';
+  _chov.querySelector('.chov-play').onclick=ev=>{ev.stopPropagation();hideChov();openMedia(meta);};
+  lb.onclick=ev=>{ev.stopPropagation();handleAddToList(meta,lb);};
+  _chov.querySelector('.chov-more').onclick=ev=>{ev.stopPropagation();hideChov();openDetail(meta);};
+  _chov.querySelector('.chov-meta').innerHTML=`<span class="match">${meta.match}% Match</span><span class="age">${meta.age}</span>${meta.date?`<span>${meta.date}</span>`:''}<span class="hd">HD</span>`;
+  _chov.querySelector('.chov-genres').innerHTML=(meta.genres||[]).map((g,i)=>`${i?'<span class="dot">●</span>':''}<span>${g}</span>`).join('');
+  _chovCard=card;
+}
+function hideChov(){_chov.style.display='none';_chovCard=null;}
 function bindCardEvents(){
   document.getElementById('rowsContainer').onclick=handleCardClick;
   document.getElementById('searchGrid').onclick=handleCardClick;
-  // Hover panel handling - move .card-hover out to body on hover so it can't be clipped
-  document.querySelectorAll('.card').forEach(card => {
-    let hideTimer;
-    card.addEventListener('mouseenter', () => {
-      clearTimeout(hideTimer);
-      const panel = card.querySelector('.card-hover');
-      if(!panel) return;
-      const wrap = card.querySelector('.card-img-wrap');
-      const rect = wrap.getBoundingClientRect();
-      // Scaled size: 1.18x
-      const scaledW = rect.width * 1.18;
-      const scaledH = rect.height * 1.18;
-      const scaledLeft = rect.left - (scaledW - rect.width) / 2;
-      const scaledTop = rect.top - (scaledH - rect.height) / 2;
-      // Position panel directly below scaled image
-      panel.style.left = scaledLeft + 'px';
-      panel.style.top = (scaledTop + scaledH - 2) + 'px';
-      panel.style.width = scaledW + 'px';
-      // Move to body so no parent can clip it
-      if(panel.parentElement !== document.body) {
-        panel._originalParent = card;
-        document.body.appendChild(panel);
-      }
-      panel.classList.add('show');
+  document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('mouseenter',()=>{clearTimeout(_chovHideTimer);showChov(card);});
+    card.addEventListener('mouseleave',e=>{
+      if(e.relatedTarget&&(e.relatedTarget===_chov||_chov.contains(e.relatedTarget)))return;
+      _chovHideTimer=setTimeout(()=>{if(!_chov.matches(':hover'))hideChov();},120);
     });
-    card.addEventListener('mouseleave', (e) => {
-      const panel = card.querySelector('.card-hover') || document.querySelector('.card-hover.show');
-      if(!panel) return;
-      // Delay hide so cursor can move onto the panel
-      hideTimer = setTimeout(() => {
-        if(!panel.matches(':hover')) {
-          panel.classList.remove('show');
-        }
-      }, 100);
-    });
-  });
-  // Hovering on the panel itself keeps it visible
-  document.addEventListener('mouseover', (e) => {
-    const panel = e.target.closest('.card-hover');
-    if(panel) panel.classList.add('show');
-  });
-  document.addEventListener('mouseout', (e) => {
-    const panel = e.target.closest('.card-hover');
-    if(panel && !panel.contains(e.relatedTarget)) {
-      setTimeout(() => {
-        if(!panel.matches(':hover')) panel.classList.remove('show');
-      }, 100);
-    }
   });
 }
 function handleCardClick(e){
-  const card=e.target.closest('.card, .top10-card');
+  const card=e.target.closest('.card,.top10-card');
   if(!card)return;
   const meta=JSON.parse(card.dataset.meta);
   const action=e.target.closest('[data-action]')?.dataset.action;
   if(action==='play'){e.stopPropagation();openMedia(meta);}
-  else if(action==='list'){e.stopPropagation();handleAddToList(meta,e.target.closest('[data-action]'));}
   else openDetail(meta);
 }
 
@@ -872,6 +865,7 @@ async function handleAddToList(meta,btn){
 }
 
 async function openDetail(meta){
+  hideChov();
   const bg=document.getElementById('detailBg'),modal=document.getElementById('detailModal');
   bg.classList.add('show');document.body.style.overflow='hidden';
   modal.innerHTML='<div style="padding:80px;text-align:center;color:#777">Loading…</div>';
@@ -992,6 +986,7 @@ function closeDetail(){
 }
 
 async function openMedia(meta){
+  hideChov();
   currentMedia={...meta};
   let url;
   if(meta.type==='tv'){
